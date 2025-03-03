@@ -1,6 +1,6 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-import classifieur  # Importation du classifieur
+import classifier  # Importation du classifieur
 import logging
 
 # Configuration des logs
@@ -32,7 +32,7 @@ def predict_stage_endpoint(description: StageDescription):
         logger.warning("Requête avec texte vide")
         raise HTTPException(status_code=400, detail="Le texte ne peut pas être vide.")
 
-    prediction = classifieur.predict_stage(text)
+    prediction = classifier.predict_stage(text)
     logger.info(f"Prédiction reçue : {text} → {prediction}")
 
     return {"stage_type": prediction}

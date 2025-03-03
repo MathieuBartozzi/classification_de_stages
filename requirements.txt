@@ -3,10 +3,6 @@ pandas
 numpy
 scikit-learn
 
-# NLP
-nltk
-textblob
-
 #Machine Learning
 joblib
 

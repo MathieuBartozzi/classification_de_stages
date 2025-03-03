@@ -11,6 +11,7 @@ L’objectif est de classifier les descriptions de stages en **"observation" (`o
 - Tokenisation et vectorisation avec **TF-IDF** (unigrammes).
 
 ### 🔹 Modèles testés
+L’entraînement du modèle et l'exploration des données sont documentés dans **`notebooks/text_classification_pipeline.ipynb`**.
 Nous avons testé plusieurs modèles :
 | Modèle                | Accuracy | F1-score |
 |----------------------|----------|----------|
