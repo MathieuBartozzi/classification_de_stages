@@ -1,60 +1,49 @@
 # Méthodologie de classification des stages
 
 
-
 ## 1. Construction du modèle
 L’objectif est de classifier les descriptions de stages en **"observation" (`ok`)** ou **"non observation" (`ko`)**.
 
-### 🔹 Prétraitement des données
+## 2. Prétraitement des données
 - Suppression des **doublons** et harmonisation des labels (`ok`/`ko`).
-- Nettoyage des **phrases suspectes** (ex : phrases vides ou non françaises).
+- Homogénisation des phrases évaluées plusieurs fois et avec des résultats différents (choix de l'évaluaation la plus fréquente)
+- Nettoyage de données : suppressions des caractères spéciaux, des majuscules, des stopwords, des espaces, lemmatisation, correction orthographique
 - Tokenisation et vectorisation avec **TF-IDF** (unigrammes).
 
-### 🔹 Modèles testés
+## 3. Modèles testés
 L’entraînement du modèle et l'exploration des données sont documentés dans **`notebooks/text_classification_pipeline.ipynb`**.
 Nous avons testé plusieurs modèles :
-| Modèle                | Accuracy | F1-score |
-|----------------------|----------|----------|
-| **Naïve Bayes**      | 0.6729   | 0.6379   |
-| **Logistic Regression** ✅ | **0.7030** | **0.6900** |
-| **SVM**              | 0.6541   | 0.6514   |
-| **Random Forest**    | 0.6992   | 0.6769   |
+| Modèle               | Accuracy  | F1-Score  |
+|----------------------|-----------|-----------|
+| Naïve Bayes         | 0.609848  | 0.524801  |
+| Logistic Regression | 0.651515  | 0.608751  |
+| SVM                 | 0.655303  | 0.650221  |
+| Random Forest       | 0.670455  | 0.631214  |
+| **XGBoost**            | **0.670455**  | **0.655317**  |
 
-📌 **Logistic Regression a été retenue** car elle offre le **meilleur compromis** entre performance et rapidité.
+✅ **XGBoost a été retenu** car il offre le **meilleur compromis** le meilleur score.
 
 ---
-
-## 2. Performances du modèle retenu
-Le modèle **Logistic Regression** donne les scores suivants :
-
-| **Métrique**          | **Score** |
-|----------------------|----------|
-| ✅ Accuracy          | 0.7030   |
-| ⚖️ Balanced Accuracy | 0.6615   |
-| 🎯 Precision        | 0.6979   |
-| 🔄 Recall          | 0.7030   |
-| 🏆 F1-score        | 0.6900   |
 
 📉 **Matrice de confusion :**
 
 ```
-[[138  24]
- [ 55  49]]
+[[134  28]
+ [ 59  43]]
 ```
 
 ---
 
-## 3. Améliorations possibles
+## 4. Améliorations possibles
 Voici les **pistes d'amélioration** pour un futur modèle plus performant :
 
-- 📌 **Gérer le déséquilibre des classes** (60% "ko" / 40% "ok") → Ajouter une pondération `class_weight='balanced'`
-- 📌 **Tester d'autres modèles plus avancés** : `RandomForest`, `XGBoost`, `BERT`
-- 📌 **Améliorer le pré-traitement NLP** (lemmatisation, suppression des stopwords)
-- 📌 **Tester un ajustement des hyperparamètres** (GridSearch pour `C`, `ngram_range`, etc.)
-
+- 📌 **Gérer le déséquilibre des classes** (60% "ko" / 40% "ok")
+- 📌 **Optimiser les hyperparamètres** du modele XGBoost (GridSearchCV)
+- 📌 **Améliorer le pré-traitement NLP** verifier la qualité de la vectorisation actuelle.
+- 📌 **Tester d'autres modèles plus avancés**  `BERT`, ou Réseau de Neurones Récurrent (`RNN`) ou une variante comme un `LSTM` (Long Short-Term Memory).
 ---
 
-## 4. API & Déploiement
+## 5. API & Déploiement
 L'API est construite avec **FastAPI** et expose un **endpoint `/predict`**.
 
 **Exemple d'appel API :**
