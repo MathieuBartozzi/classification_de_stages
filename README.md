@@ -46,7 +46,30 @@ Voici les **pistes d'amélioration** pour un futur modèle plus performant :
 ## 5. API & Déploiement
 L'API est construite avec **FastAPI** et expose un **endpoint `/predict`**.
 
-**Exemple d'appel API :**
+1. Assurez-vous d'avoir un environnement virtuel activé et installez les dépendances :
+
+```
+pip install -r requirements.txt
+```
+
+2. Exécutez la commande suivante depuis le dossier où se trouve votre projet :
+
+```
+uvicorn api.api:app --reload
+```
+
+L'API tournera alors sur `http://127.0.0.1:8000`.
+
+3. Ouvrir le lien dans et la réponse suivante apparaitra dans votre navigateur :
+
+```
+{
+  "message": "Bienvenue sur l'API de classification des stages"
+}
+
+```
+
+**Exemple d'appel API en local :**
 ```
 curl -X 'POST' 'http://127.0.0.1:8000/predict' \
   -H 'Content-Type: application/json' \
@@ -55,5 +78,4 @@ curl -X 'POST' 'http://127.0.0.1:8000/predict' \
 {
   "stage_type": "ok"
 }
-
 ```
